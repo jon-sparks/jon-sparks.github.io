@@ -8,14 +8,50 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="normalize.css">
+        <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
     </head>
 
     <body>
 
         <div class="wrapper">
-            
+            <div class="portrait layer" data-strength="3">
+                <img src="face.jpg" alt="">
+            </div>
+            <h1 class="layer" data-strength="2">My name is Jon Sparks</h1>
+            <h2 class="layer" data-strength="1">A Web Developer from South Wales</h2>
+            <ul class="links layer" data-strength="1">
+                <li><a href="https://github.com/jon-sparks" target="_blank">Github</a></li>
+                <li><a href="https://codepen.io/jonsp" target="_blank">Codepen</a></li>
+                <li><a href="https://www.linkedin.com/in/jonsparksdesign/" target="_blank">Linkedin</a></li>
+            </ul>
         </div>
 
     </body>
+
+    <script>
+        const wrappers = document.querySelectorAll('.wrapper')
+        const layers = document.querySelectorAll('.layer')
+
+        const halfScreenY = window.innerHeight / 2
+        const halfScreenX = window.innerWidth / 2
+
+        const strength = (val) => {
+        return {x:200/val, y:150/val}
+        }
+
+        wrappers.forEach(wrapper => {
+            wrapper.addEventListener('mousemove', e => {
+            layers.forEach(layer => {
+                layer.style.webkitTransform = 
+                    `translate3d(
+                    ${(e.clientX - halfScreenX) / strength(parseInt(layer.getAttribute('data-strength'))).x}px,
+                    ${(e.clientY - halfScreenY) / strength(parseInt(layer.getAttribute('data-strength'))).y}px , 0px
+                    )`
+                })
+            })
+        })
+
+    </script>
 
 </html>
